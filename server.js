@@ -2,6 +2,7 @@ const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
 const session = require('express-session');
+const SQLiteStore = require('connect-sqlite3')(session); // << เพิ่มบรรทัดนี้
 const sqlite3 = require('sqlite3').verbose();
 const { open } = require('sqlite');
 const bcrypt = require('bcrypt');
@@ -14,7 +15,14 @@ const PORT = process.env.PORT || 3000;
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-const sessionMiddleware = session({ secret: 'super-secret-key-change-it', resave: false, saveUninitialized: false });
+
+
+const sessionMiddleware = session({
+    store: new SQLiteStore({ db: 'baccarat.db', dir: './' }), // << บอกให้ session เก็บข้อมูลในไฟล์ baccarat.db
+    secret: 'a-very-strong-secret-key-that-you-should-change',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 7 * 24 * 60 * 60 * 1000 } // 7 days
 app.use(sessionMiddleware);
 io.use((socket, next) => { sessionMiddleware(socket.request, {}, next) });
 
