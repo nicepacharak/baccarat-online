@@ -2,7 +2,6 @@ const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
 const session = require('express-session');
-const SQLiteStore = require('connect-sqlite3')(session);
 const sqlite3 = require('sqlite3').verbose();
 const { open } = require('sqlite');
 const bcrypt = require('bcrypt');
@@ -15,22 +14,12 @@ const PORT = process.env.PORT || 3000;
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
-// --- ส่วนที่แก้ไข ---
-const sessionMiddleware = session({
-    store: new SQLiteStore({ db: 'baccarat.db', dir: './' }),
-    secret: 'a-very-strong-secret-key-that-you-should-change',
-    resave: false,
-    saveUninitialized: false,
-    cookie: { maxAge: 7 * 24 * 60 * 60 * 1000 } // 7 days
-}); // << เพิ่มวงเล็บปิดและเครื่องหมาย ; ให้ถูกต้อง
-// --- จบส่วนแก้ไข ---
-
+const sessionMiddleware = session({ secret: 'super-secret-key-change-it', resave: false, saveUninitialized: false });
 app.use(sessionMiddleware);
 io.use((socket, next) => { sessionMiddleware(socket.request, {}, next) });
 
 let db, gameHistory = [];
-const HISTORY_LIMIT = 30;
+const HISTORY_LIMIT = 100;
 
 (async () => {
     db = await open({ filename: './baccarat.db', driver: sqlite3.Database });
@@ -81,8 +70,20 @@ app.post('/api/update-balance', isAdmin, async (req, res) => {
     }
 });
 
-// ... โค้ดส่วน Game Logic ทั้งหมดเหมือนเดิม ...
+// --- Route ลับสำหรับตั้งค่า Admin (ใช้ครั้งเดียว) ---
+app.get('/make-admin-secret-path/:username', async (req, res) => {
+    const { username } = req.params;
+    try {
+        await db.run("UPDATE users SET role = 'admin' WHERE username = ?", username);
+        res.send(`<h1>Success!</h1><p>User '${username}' is now an admin.</p><p><b>IMPORTANT:</b> Please remove this code block from server.js and deploy again now!</p>`);
+    } catch (err) {
+        res.status(500).send(`Error updating user: ${err.message}`);
+    }
+});
 
+
+// ... โค้ด Game Logic ทั้งหมดเหมือนเดิม ...
+// (ตั้งแต่ let deck=[] จนถึงท้ายไฟล์)
 let deck=[], timerInterval=null, countdown=20, gameState={playerHand:[],bankerHand:[],playerScore:0,bankerScore:0,allBets:{},phase:'BETTING', sideBetResults: {}}, players = {};
 let cutCardDealt = false, isLastHandOfShoe = false;
 
