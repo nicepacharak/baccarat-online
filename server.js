@@ -2,7 +2,7 @@ const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
 const session = require('express-session');
-const SQLiteStore = require('connect-sqlite3')(session); // << เพิ่มบรรทัดนี้
+const SQLiteStore = require('connect-sqlite3')(session);
 const sqlite3 = require('sqlite3').verbose();
 const { open } = require('sqlite');
 const bcrypt = require('bcrypt');
@@ -16,13 +16,16 @@ app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-
+// --- ส่วนที่แก้ไข ---
 const sessionMiddleware = session({
-    store: new SQLiteStore({ db: 'baccarat.db', dir: './' }), // << บอกให้ session เก็บข้อมูลในไฟล์ baccarat.db
+    store: new SQLiteStore({ db: 'baccarat.db', dir: './' }),
     secret: 'a-very-strong-secret-key-that-you-should-change',
     resave: false,
     saveUninitialized: false,
     cookie: { maxAge: 7 * 24 * 60 * 60 * 1000 } // 7 days
+}); // << เพิ่มวงเล็บปิดและเครื่องหมาย ; ให้ถูกต้อง
+// --- จบส่วนแก้ไข ---
+
 app.use(sessionMiddleware);
 io.use((socket, next) => { sessionMiddleware(socket.request, {}, next) });
 
@@ -77,6 +80,8 @@ app.post('/api/update-balance', isAdmin, async (req, res) => {
         res.sendStatus(500);
     }
 });
+
+// ... โค้ดส่วน Game Logic ทั้งหมดเหมือนเดิม ...
 
 let deck=[], timerInterval=null, countdown=20, gameState={playerHand:[],bankerHand:[],playerScore:0,bankerScore:0,allBets:{},phase:'BETTING', sideBetResults: {}}, players = {};
 let cutCardDealt = false, isLastHandOfShoe = false;
