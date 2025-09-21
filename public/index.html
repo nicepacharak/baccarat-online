@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baccarat Online</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="top-bar">
+        <span id="welcome-message">ยินดีต้อนรับ, <b id="username-display">Player</b>!</span>
+        <a id="admin-btn-link" href="/admin" class="top-button hidden">Admin Panel</a> 
+	<button id="history-btn" class="top-button">ประวัติการเล่น</button>
+        <a href="/logout">ออกจากระบบ</a>
+    </div>
+
+    <div id="game-table">
+        <div id="info-display">
+            <div id="timer-display">20</div>
+            <div id="deck-count-display">ไพ่: 312<div id="shoe-indicator" class="indicator-ok"></div></div>
+            <h2 id="message">กำลังเชื่อมต่อ...</h2>
+            <div class="balance-info">
+                <span>ยอดเงินคงเหลือ:</span>
+                <span id="balance">1000</span>
+            </div>
+             <div class="bet-info">
+                <span>เดิมพันของคุณ:</span>
+                <span id="total-bet">0</span>
+            </div>
+        </div>
+        
+        <div class="playing-area">
+            <div id="player-area">
+                <div class="side-bet-group-vertical">
+                    <div class="spot side-bet" data-bet-type="player_bonus"><span>P. BONUS</span><span class="payout-ratio">up to 30:1</span><div class="placed-chips"></div></div>
+                    <div class="spot side-bet" data-bet-type="player_pair"><span>P. PAIR</span><span class="payout-ratio">11:1</span><div class="placed-chips"></div></div>
+                </div>
+                <div class="hand-main-area">
+                    <h3>Player: <span id="player-score">0</span></h3>
+                    <div id="player-hand" class="hand"></div>             
+                </div>
+            </div>
+            <div id="banker-area">
+                <div class="hand-main-area">
+                    <h3>Banker: <span id="banker-score">0</span></h3>
+                    <div id="banker-hand" class="hand"></div>
+                </div>
+                <div class="side-bet-group-vertical">
+                     <div class="spot side-bet" data-bet-type="banker_bonus"><span>B. BONUS</span><span class="payout-ratio">up to 30:1</span><div class="placed-chips"></div></div>
+                     <div class="spot side-bet" data-bet-type="banker_pair"><span>B. PAIR</span><span class="payout-ratio">11:1</span><div class="placed-chips"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="bottom-bets-container">
+            <div id="betting-spots">
+                <div class="spot" id="player-bet-spot" data-bet-type="player"><span>PLAYER</span><span class="payout-ratio">1:1</span><div class="placed-chips"></div></div>
+                <div class="spot" id="tie-bet-spot" data-bet-type="tie"><span>TIE</span><span class="payout-ratio">8:1</span><div class="placed-chips"></div></div>
+                <div class="spot" id="banker-bet-spot" data-bet-type="banker"><span>BANKER</span><span class="payout-ratio">1:0.95</span><div class="placed-chips"></div></div>
+            </div>
+            <div id="bottom-side-bets" class="side-bets-area">
+                <div class="spot side-bet" data-bet-type="perfect_pair"><span>PERFECT PAIR</span><span class="payout-ratio">25:1 / 200:1</span><div class="placed-chips"></div></div>
+                <div class="spot side-bet" data-bet-type="any_pair"><span>ANY PAIR</span><span class="payout-ratio">5:1</span><div class="placed-chips"></div></div>
+            </div>
+        </div>
+
+        <div id="controls">
+            <div id="chips">
+                <div class="chip" data-value="10">10</div>
+                <div class="chip" data-value="50">50</div>
+                <div class="chip" data-value="100">100</div>
+                <div class="chip" data-value="500">500</div>
+                <div class="chip" data-value="1000">1k</div>
+                <div class="chip" data-value="5000">5k</div>
+            </div>
+            <div id="action-buttons">
+                <button id="rebet-btn" class="hidden">ลงซ้ำ</button>
+                <button id="clear-btn">ล้างเดิมพัน</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="scoreboard-container">
+        <div class="scoreboard-wrapper">
+            <h3>Bead Plate</h3>
+            <div id="bead-plate" class="scoreboard-grid"></div>
+        </div>
+        <div class="scoreboard-wrapper">
+            <h3>Big Road</h3>
+            <div id="big-road" class="scoreboard-grid"></div>
+        </div>
+    </div>
+
+    <div id="history-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>ประวัติการเดิมพัน 50 ตาล่าสุด</h2>
+            <div class="history-table-container">
+                <table>
+                    <thead><tr><th>เวลา</th><th>เดิมพัน</th><th>ยอด</th><th>ผลชนะ</th><th>ไพ่ผู้เล่น</th><th>ไพ่เจ้ามือ</th><th>ได้/เสีย</th></tr></thead>
+                    <tbody id="history-table-body"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="client.js"></script>
+</body>
+</html>

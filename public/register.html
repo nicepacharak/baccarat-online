@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>Register - Baccarat Online</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="auth-container">
+        <h2>สมัครสมาชิก</h2>
+        <form action="/register" method="POST">
+            <input type="text" name="username" placeholder="ชื่อผู้ใช้" required>
+            <input type="password" name="password" placeholder="รหัสผ่าน" required>
+            <button type="submit">Register</button>
+        </form>
+        <p>มีบัญชีอยู่แล้ว? <a href="/login.html">เข้าสู่ระบบ</a></p>
+        <p id="error-message" class="error"></p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,85 @@
+/* --- General & Auth --- */
+body {background-color:#1a1a1a;color:white;font-family:Arial,sans-serif;display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:100vh;margin:0;padding:20px 0;box-sizing:border-box;}
+.auth-container{background-color:#2c2c2c;padding:30px;border-radius:10px;width:100%;max-width:400px;text-align:center;}
+.auth-container h2{margin-bottom:20px;}
+.auth-container input{width:100%;padding:10px;margin-bottom:15px;border-radius:5px;border:1px solid #555;background:#333;color:white;box-sizing:border-box;}
+.auth-container button{width:100%;}
+.auth-container p{margin-top:20px;}
+.error{color:#ff4d4d;}
+.top-bar{position:absolute;top:10px;right:20px;display:flex;align-items:center;gap:20px;}
+.top-bar a{color:gold;text-decoration:none;}
+.hidden{display:none!important}
+.top-button { background: none; border: 1px solid gold; color: gold; cursor: pointer; padding: 5px 10px; font-size: 14px;}
+
+/* --- Game Table & Timer --- */
+#game-table{background-color:#006400;border:10px solid #8B4513;border-radius:150px/50px;padding:20px;width:90%;max-width:1000px;text-align:center;position:relative;}
+#info-display{padding-bottom:10px;}
+#timer-display{position:absolute;top:20px;left:20px;width:60px;height:60px;background-color:rgba(0,0,0,0.5);border:4px solid gold;border-radius:50%;display:flex;justify-content:center;align-items:center;font-size:2em;font-weight:bold;color:white;box-shadow:0 0 10px black;}
+#deck-count-display{position:absolute;top:25px;left:100px;font-size:1.2em;color:#fff;background:rgba(0,0,0,.5);padding:5px 10px;border-radius:5px;display:flex;align-items:center;gap:10px;}
+#shoe-indicator{width:15px;height:15px;border-radius:50%;transition:background-color .3s;}
+.indicator-ok{background-color:#28a745;box-shadow:0 0 5px #28a745;}
+.indicator-warning{background-color:#dc3545;box-shadow:0 0 8px #ff0000;}
+
+
+/* --- Cards & Hands --- */
+.playing-area{display:flex;justify-content:space-between;align-items:flex-start;margin:20px 0;min-height:180px;}
+#player-area, #banker-area { display: flex; align-items: center; gap: 10px; }
+.hand-main-area { text-align: center; }
+.hand{display:flex;justify-content:center;align-items:center;gap:10px;min-width:250px;background-color:rgba(0,0,0,0.2);padding:10px;border-radius:10px;height:120px;}
+.card{width:80px;height:110px;background-color:white;color:black;border-radius:8px;border:1px solid black;font-weight:bold;box-sizing:border-box;padding:5px;display:flex;flex-direction:column;justify-content:space-between;align-items:center;opacity:0;transform:scale(0.7);transition:opacity .4s ease-out,transform .4s ease-out;}
+.card.visible{opacity:1;transform:scale(1);}
+.card span:first-child{font-size:2.5em;line-height:1;}
+.card span:last-child{font-size:2.5em;line-height:1;}
+
+/* --- Betting & Controls --- */
+.side-bet-group-vertical { display: flex; flex-direction: column; gap: 8px; }
+#bottom-bets-container { margin-top: 10px; }
+#betting-spots, #bottom-side-bets {display:flex;justify-content:center;gap:10px;margin:10px 0;}
+.spot{border:3px solid gold;padding:10px 15px;border-radius:10px;cursor:pointer;transition:background-color .3s;font-size:14px; display: flex; flex-direction: column; justify-content: flex-start; align-items: center;}
+.spot > span:first-child { font-weight: bold; }
+.payout-ratio { font-size: 0.8em; color: rgba(255, 255, 255, 0.8); margin-top: 4px; }
+.spot:hover{background-color:rgba(255,215,0,0.2);}
+.side-bet{font-size: 11px; padding: 8px 10px; min-width: 80px;}
+#controls{display:flex;justify-content:space-between;align-items:center;margin-top:20px;}
+#chips{display:flex;gap:10px;}
+.chip{width:50px;height:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;font-weight:bold;cursor:pointer;border:2px solid white;transition:transform .2s;}
+.chip:hover{transform:scale(1.1);}
+.chip[data-value="10"]{background-color:blue;}
+.chip[data-value="50"]{background-color:red;}
+.chip[data-value="100"]{background-color:black;}
+.chip[data-value="500"]{background-color:purple;}
+.chip.selected{box-shadow:0 0 15px 5px yellow;}
+#action-buttons{display:flex;gap:10px;}
+button{padding:10px 20px;font-size:16px;cursor:pointer;border-radius:5px;border:none;background-color:gold;color:black;}
+.placed-chips{position:relative;height:30px;margin-top:5px;display:flex;justify-content:center;align-items:flex-end; min-width: 50px;}
+.board-chip{width:30px;height:30px;position:absolute;bottom:0;border-radius:50%;border:1px solid rgba(255,255,255,0.7);box-shadow:0 1px 2px rgba(0,0,0,0.5);}
+.bet-amount-display{position:absolute;bottom:-20px;left:0;right:0;color:gold;font-size:14px;font-weight:bold;text-shadow:1px 1px 2px black;}
+
+/* --- Scoreboards --- */
+#scoreboard-container {display:flex;gap:20px;justify-content:center;align-items:flex-start;background-color:#004d00;border:5px solid #8B4513;border-radius:10px;padding:15px;margin-top:20px;width:90%;max-width:1000px;box-sizing:border-box;}
+.scoreboard-wrapper {text-align:center;flex-shrink:0;}
+.scoreboard-grid {display:grid;gap:2px;background-color:#003300;border:1px solid gold;padding:2px;grid-template-rows:repeat(6, 22px);}
+#bead-plate {grid-template-columns:repeat(12, 22px);}
+#big-road {grid-template-columns:repeat(25, 22px);}
+.bead-plate-cell, .big-road-cell {width:22px;height:22px;position:relative;border-radius:50%;box-sizing:border-box;}
+.bead-plate-cell {color:white;font-weight:bold;font-size:0.8em;}
+.bead-plate-cell::before{content:attr(data-winner);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);}
+.bead-player{background-color:#0000ff;border:1px solid #6666ff;}
+.bead-banker{background-color:#ff0000;border:1px solid #ff6666;}
+.bead-tie{background-color:#00cc00;border:1px solid #66ff66;}
+.big-road-cell{background-color:transparent;border-width:2px;border-style:solid;}
+.br-player{border-color:#0000ff;}
+.br-banker{border-color:#ff0000;}
+.has-tie::after{content:'';position:absolute;top:50%;left:10%;right:10%;height:2px;background-color:#00cc00;transform:translateY(-50%) rotate(-45deg);transform-origin:center;}
+
+/* --- History Modal --- */
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: flex; justify-content: center; align-items: center; z-index: 1000; }
+.modal-content { background: #2c2c2c; padding: 20px; border-radius: 10px; width: 90%; max-width: 900px; max-height: 80vh; display: flex; flex-direction: column; }
+.close-btn { align-self: flex-end; font-size: 2em; cursor: pointer; line-height: 1; }
+.history-table-container { overflow-y: auto; }
+table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+th, td { padding: 8px; border: 1px solid #444; text-align: center; }
+th { background: #333; }
+.history-win { color: #28a745; }
+.history-loss { color: #dc3545; }
+
